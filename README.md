@@ -1,4 +1,4 @@
-# 🎮 Games.io
+# Games.io
 
 **Games.io** is a fun and casual browser-based website featuring a variety of simple, addictive games — including classics like **Dino Run**, **Flappy Bird**, **Car Game**, **Guess the Country** and many more. Whether you're bored, taking a break, or just want to challenge your reflexes, Games.io has something quick and entertaining for you.
 ---
