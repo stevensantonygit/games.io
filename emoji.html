@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Guessing Game - Zynk</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="emoji.js" defer></script>
+</head>
+<body>
+    <header class="glass-header"><h1>Emoji Guessing Game</h1></header>
+    <main style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;">
+        <div id="emoji-clue" style="font-size:3em;margin:32px 0;text-align:center;"></div>
+        <input id="emoji-guess" type="text" placeholder="Type your guess..." style="font-size:1.2em;padding:10px 18px;border-radius:8px;border:none;margin-bottom:12px;text-align:center;">
+        <button class="play-btn" onclick="submitEmojiGuess()">Guess</button>
+        <div id="emoji-result" style="margin-top:24px;font-size:1.2em;text-align:center;"></div>
+        <button class="play-btn" onclick="nextEmoji()" style="margin-top:32px;">Next</button>
+    </main>
+    <footer class="glass-footer">
+        <a href="games.html" class="play-btn" style="margin-top:18px;display:inline-block;">&#8592; Back to Games</a>
+    </footer>
+</body>
+</html>

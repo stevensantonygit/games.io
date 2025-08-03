@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Memory - Games.io</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .color-memory-container {
+            max-width: 400px;
+            margin: 48px auto;
+            padding: 32px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+        .color-btn {
+            width: 60px;
+            height: 60px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 2px solid #ffd600;
+            cursor: pointer;
+            outline: none;
+            font-size: 0;
+        }
+        .color-btn:active {
+            filter: brightness(1.2);
+        }
+        .color-score {
+            color: #ffd600;
+            margin-top: 12px;
+        }
+        .glass-btn {
+            background: rgba(255,255,255,0.18);
+            border: 2px solid #ffd600;
+            color: #222;
+            border-radius: 16px;
+            padding: 14px 38px;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            backdrop-filter: blur(8px);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+        .glass-btn:hover {
+            background: rgba(255,255,255,0.28);
+            box-shadow: 0 8px 32px #ffd60044;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .glass-btn:active {
+            background: #ffd600;
+            color: #222;
+            box-shadow: 0 2px 8px #ffd60044;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <h1>Games.io</h1>
+        <nav>
+            <a href="home.html" class="nav-btn">Home</a>
+            <a href="games.html" class="nav-btn">Games</a>
+        </nav>
+    </header>
+    <main>
+        <div class="color-memory-container glass-card">
+            <h2>Color Memory</h2>
+            <div id="colorBtns"></div>
+            <button class="glass-btn" id="startBtn" onclick="startGame()">Start</button>
+            <div id="status" style="margin-top:18px;font-weight:bold;"></div>
+            <div class="color-score" id="score"></div>
+        </div>
+    </main>
+    <footer class="glass-footer">
+        <p>&copy; 2025 Games.io. All rights reserved.</p>
+    </footer>
+    <script>
+    const colors = ["red","blue","green","yellow"];
+    let sequence = [];
+    let userStep = 0;
+    let playing = false;
+    let score = 0;
+    function renderBtns(){
+        let html = "";
+        colors.forEach((c,i)=>{
+            html += `<button class='color-btn' style='background:${c};' onclick='pressColor(${i})'></button>`;
+        });
+        document.getElementById('colorBtns').innerHTML = html;
+    }
+    function startGame(){
+        sequence = [];
+        userStep = 0;
+        score = 0;
+        playing = true;
+        document.getElementById('status').textContent = "Watch the sequence!";
+        document.getElementById('score').textContent = "Score: 0";
+        nextRound();
+    }
+    function nextRound(){
+        sequence.push(Math.floor(Math.random()*4));
+        userStep = 0;
+        showSequence(0);
+    }
+    function showSequence(i){
+        if(i<sequence.length){
+            highlightBtn(sequence[i]);
+            setTimeout(()=>{
+                unhighlightBtns();
+                setTimeout(()=>showSequence(i+1),400);
+            },600);
+        }else{
+            document.getElementById('status').textContent = "Your turn! Repeat the sequence.";
+        }
+    }
+    function highlightBtn(idx){
+        const btns = document.querySelectorAll('.color-btn');
+        btns[idx].style.boxShadow = "0 0 24px 8px #ffd600";
+    }
+    function unhighlightBtns(){
+        document.querySelectorAll('.color-btn').forEach(btn=>btn.style.boxShadow="none");
+    }
+    function pressColor(idx){
+        if(!playing||document.getElementById('status').textContent!="Your turn! Repeat the sequence.")return;
+        if(idx===sequence[userStep]){
+            userStep++;
+            if(userStep===sequence.length){
+                score++;
+                document.getElementById('score').textContent = `Score: ${score}`;
+                document.getElementById('status').textContent = "Correct! Next round...";
+                setTimeout(nextRound,1200);
+            }
+        }else{
+            playing=false;
+            document.getElementById('status').textContent = `Wrong! Game Over. Final Score: ${score}`;
+        }
+    }
+    window.onload=renderBtns;
+    </script>
+</body>
+</html>
