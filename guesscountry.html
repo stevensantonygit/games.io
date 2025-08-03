@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Country - Games.io</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .country-game-container {
+            max-width: 400px;
+            margin: 48px auto;
+            padding: 32px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+        .country-flag {
+            width: 120px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 2px solid #ffd600;
+        }
+        .country-input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ffd600;
+            width: 80%;
+            margin-bottom: 16px;
+        }
+        .country-btn {
+            background: #ffd600;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .country-btn:active {
+            background: #e6c200;
+        }
+        .country-hint {
+            font-size: 1em;
+            color: #ffd600;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <h1>Games.io</h1>
+        <nav>
+            <a href="home.html" class="nav-btn">Home</a>
+            <a href="games.html" class="nav-btn">Games</a>
+        </nav>
+    </header>
+    <main>
+        <div class="country-game-container glass-card">
+            <h2>Guess the Country!</h2>
+            <img id="flag" class="country-flag" src="" alt="Country Flag">
+            <div class="country-hint" id="hint"></div>
+            <input type="text" id="answer" class="country-input" placeholder="Type country name...">
+            <br>
+            <button class="country-btn" onclick="checkCountry()">Guess</button>
+            <div id="result" style="margin-top:18px;font-weight:bold;"></div>
+            <button class="country-btn" style="margin-top:18px;display:none;" id="nextBtn" onclick="nextCountry()">Next</button>
+        </div>
+    </main>
+    <footer class="glass-footer">
+        <p>&copy; 2025 Games.io. All rights reserved.</p>
+    </footer>
+    <script>
+    const countries = [
+        {
+            name: "Japan",
+            flag: "https://flagcdn.com/w320/jp.png",
+            hint: "Land of the Rising Sun, famous for sushi and cherry blossoms."
+        },
+        {
+            name: "Brazil",
+            flag: "https://flagcdn.com/w320/br.png",
+            hint: "Largest country in South America, famous for Carnival and football."
+        },
+        {
+            name: "Canada",
+            flag: "https://flagcdn.com/w320/ca.png",
+            hint: "Second largest country, known for maple syrup and ice hockey."
+        },
+        {
+            name: "Egypt",
+            flag: "https://flagcdn.com/w320/eg.png",
+            hint: "Home of the pyramids and the Nile River."
+        },
+        {
+            name: "Australia",
+            flag: "https://flagcdn.com/w320/au.png",
+            hint: "Island continent, famous for kangaroos and the Outback."
+        },
+        {
+            name: "India",
+            flag: "https://flagcdn.com/w320/in.png",
+            hint: "Country of the Taj Mahal, Bollywood, and spicy food."
+        },
+        {
+            name: "France",
+            flag: "https://flagcdn.com/w320/fr.png",
+            hint: "Known for the Eiffel Tower, wine, and cheese."
+        },
+        {
+            name: "Italy",
+            flag: "https://flagcdn.com/w320/it.png",
+            hint: "Home of pizza, pasta, and ancient Roman ruins."
+        },
+        {
+            name: "South Africa",
+            flag: "https://flagcdn.com/w320/za.png",
+            hint: "Country at the southern tip of Africa, famous for safaris."
+        },
+        {
+            name: "United Kingdom",
+            flag: "https://flagcdn.com/w320/gb.png",
+            hint: "Home to Big Ben, tea, and the Queen."
+        }
+    ];
+    let current = 0;
+    let score = 0;
+
+    function showCountry() {
+        document.getElementById('flag').src = countries[current].flag;
+        document.getElementById('hint').textContent = countries[current].hint;
+        document.getElementById('answer').value = "";
+        document.getElementById('result').textContent = "";
+        document.getElementById('nextBtn').style.display = "none";
+    }
+
+    function checkCountry() {
+        const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+        const correct = countries[current].name.toLowerCase();
+        if (userAnswer === correct) {
+            document.getElementById('result').textContent = "Correct!";
+            score++;
+        } else {
+            document.getElementById('result').textContent = `Wrong! It was ${countries[current].name}.`;
+        }
+        document.getElementById('nextBtn').style.display = "inline-block";
+    }
+
+    function nextCountry() {
+        current++;
+        if (current < countries.length) {
+            showCountry();
+        } else {
+            document.querySelector('.country-game-container').innerHTML = `<h2>Game Over!</h2><p>Your score: ${score} / ${countries.length}</p><button class='country-btn' onclick='restartGame()'>Play Again</button>`;
+        }
+    }
+
+    function restartGame() {
+        current = 0;
+        score = 0;
+        document.querySelector('.country-game-container').innerHTML = `<h2>Guess the Country!</h2>
+            <img id='flag' class='country-flag' src='' alt='Country Flag'>
+            <div class='country-hint' id='hint'></div>
+            <input type='text' id='answer' class='country-input' placeholder='Type country name...'>
+            <br>
+            <button class='country-btn' onclick='checkCountry()'>Guess</button>
+            <div id='result' style='margin-top:18px;font-weight:bold;'></div>
+            <button class='country-btn' style='margin-top:18px;display:none;' id='nextBtn' onclick='nextCountry()'>Next</button>`;
+        setTimeout(showCountry, 100);
+    }
+
+    window.onload = showCountry;
+    </script>
+</body>
+</html>

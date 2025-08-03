@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors - Zynk</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="rps.js" defer></script>
+</head>
+<body>
+    <header class="glass-header"><h1>Rock, Paper, Scissors</h1></header>
+    <main style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;">
+        <canvas id="rpsCanvas" width="400" height="220" style="display:block;margin:0 auto;"></canvas>
+        <div style="margin:24px 0;">
+            <button class="play-btn" onclick="playRPS('rock')">Rock</button>
+            <button class="play-btn" onclick="playRPS('paper')">Paper</button>
+            <button class="play-btn" onclick="playRPS('scissors')">Scissors</button>
+        </div>
+        <div id="rpsResult" style="font-size:1.3em;margin-bottom:18px;text-align:center;"></div>
+    </main>
+    <footer class="glass-footer">
+        <a href="games.html" class="play-btn" style="margin-top:18px;display:inline-block;">&#8592; Back to Games</a>
+    </footer>
+</body>
+</html>

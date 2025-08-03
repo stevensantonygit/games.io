@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz - Games.io</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .math-quiz-container {
+            max-width: 400px;
+            margin: 48px auto;
+            padding: 32px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+        .math-input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ffd600;
+            width: 80%;
+            margin-bottom: 16px;
+        }
+        .math-btn {
+            background: #ffd600;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .math-btn:active {
+            background: #e6c200;
+        }
+    </style>
+</head>
+<body>
+    <header class="glass-header">
+        <h1>Games.io</h1>
+        <nav>
+            <a href="home.html" class="nav-btn">Home</a>
+            <a href="games.html" class="nav-btn">Games</a>
+        </nav>
+    </header>
+    <main>
+        <div class="math-quiz-container glass-card">
+            <h2>Math Quiz</h2>
+            <div id="question" style="font-size:1.3em;margin-bottom:16px;"></div>
+            <input type="number" id="answer" class="math-input" placeholder="Your answer">
+            <br>
+            <button class="math-btn" onclick="checkAnswer()">Submit</button>
+            <div id="result" style="margin-top:18px;font-weight:bold;"></div>
+            <div id="score" style="margin-top:12px;color:#ffd600;"></div>
+            <button class="math-btn" style="margin-top:18px;display:none;" id="nextBtn" onclick="nextQuestion()">Next</button>
+        </div>
+    </main>
+    <footer class="glass-footer">
+        <p>&copy; 2025 Games.io. All rights reserved.</p>
+    </footer>
+    <script>
+    let score = 0;
+    let total = 0;
+    let currentQ = {};
+    function randomInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+    function generateQuestion(){
+        const ops = ['+','-','×','÷'];
+        const op = ops[randomInt(0,3)];
+        let a,b,ans;
+        if(op==='+'){a=randomInt(10,99);b=randomInt(10,99);ans=a+b;}
+        else if(op==='-'){a=randomInt(20,99);b=randomInt(10,a);ans=a-b;}
+        else if(op==='×'){a=randomInt(2,12);b=randomInt(2,12);ans=a*b;}
+        else{b=randomInt(2,12);ans=randomInt(2,12);a=b*ans;}
+        return {q:`${a} ${op} ${b} = ?`,ans};
+    }
+    function showQuestion(){
+        currentQ=generateQuestion();
+        document.getElementById('question').textContent=currentQ.q;
+        document.getElementById('answer').value="";
+        document.getElementById('result').textContent="";
+        document.getElementById('nextBtn').style.display="none";
+        document.getElementById('score').textContent=`Score: ${score} / ${total}`;
+    }
+    function checkAnswer(){
+        const userAns=Number(document.getElementById('answer').value);
+        total++;
+        if(userAns===currentQ.ans){
+            document.getElementById('result').textContent="Correct!";
+            score++;
+        }else{
+            document.getElementById('result').textContent=`Wrong! The answer was ${currentQ.ans}.`;
+        }
+        document.getElementById('score').textContent=`Score: ${score} / ${total}`;
+        document.getElementById('nextBtn').style.display="inline-block";
+    }
+    function nextQuestion(){showQuestion();}
+    window.onload=showQuestion;
+    </script>
+</body>
+</html>
