@@ -5,7 +5,6 @@
 ## Highlights
 
 - Fast, simple, and fun games
-- Eye-catching 3D animated banner using Three.js
 - Works on desktop and mobile browsers
 - Easy to expand with more games
 
